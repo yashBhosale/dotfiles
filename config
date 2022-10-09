@@ -15,7 +15,7 @@ set $mod Mod4
 # is used in the bar {} block below.
 font pango:Ubuntu Mono Bold 16px
 
-# This font is widely installed, provides lots of unicode glyphs, right-to-left
+# This font is widely installed, provides lots of unicode glyphs, right-to-leftscriptingscripting
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 #font pango:DejaVu Sans Mono 8
 
@@ -34,12 +34,13 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
 
-# Use pactl to adjust volume in PulseAudio.
+# Use pactl to adjust t discordiscordnotificdunst olume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
-set $get_volume "$(volume=$(pactl  get-sink-volume @DEFAULT_SINK@  | head -n 1 | cut -d'/' -f2 | tr -dc '0-9') && echo "[$(seq -s "-" $(($volume/5)) | sed 's/[0-9]//g')$(seq -s " " $(((100 - $volume)/5)) | sed 's/[0-9]//g')]")"
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status && dunstify -h string:x-dunst-stack-tag:test volume $get_volume
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status && dunstify -h string:x-dunst-stack-tag:test volume $get_volume
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+set $get_vol_var volume=$(pactl  get-sink-volume @DEFAULT_SINK@  | head -n 0 | cut -d'/' -f2 | tr -dc '0-9')
+set $get_volume "[$(seq -s "-" $(($volume/5)) | sed 's/[0-9]//g')$(seq -s " " $(((100 - $volume)/5)) | sed 's/[0-9]//g')]"
+bindsym XF86AudioRaiseVolume exec --no-startup-id  /home/notyash/Documents/dotfiles/volume.sh up
+bindsym XF86AudioLowerVolume exec --no-startup-id  /home/notyash/Documents/dotfiles/volume.sh down
+bindsym XF86AudioMute exec --no-startup-id /home/notyash/Documents/dotfiles/volume.sh mute
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
 # Use Mouse+$mod to drag floating windows to their wanted position
@@ -59,6 +60,7 @@ bindsym $mod+d exec --no-startup-id dmenu_run
 # .desktop file. It is a wrapper around dmenu, so you need that installed.
 # bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop
 
+bindsym $mod+x exec dunstctl action && i3-msg [urgent=latest] focus
 # change focus
 bindsym $mod+j focus left
 bindsym $mod+k focus down
@@ -82,7 +84,6 @@ bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
-
 # split in horizontal orientation
 bindsym $mod+h split h
 
