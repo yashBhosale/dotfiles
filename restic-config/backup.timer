@@ -1,0 +1,8 @@
+[Unit]
+Description="Run backup.service every day at 8pm"
+
+[Timer]
+OnCalendar=Mon..Sun *-*-* *:*:00
+
+[Install]
+WantedBy=multi-user.target
