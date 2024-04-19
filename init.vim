@@ -1,16 +1,3 @@
-:call plug#begin('~/.config/nvim')
-Plug 'neomake/neomake'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" Plug 'zchee/deoplete-jedi'
-" Plug 'davidhalter/jedi-vim'
-Plug 'neovim/nvim-lspconfig'
-Plug 'Shougo/deoplete-lsp'
-Plug 'Chiel92/vim-autoformat'
-Plug 'jiangmiao/auto-pairs'
-
-
-:call plug#end()
-
 :set number
 :filetype on
 :set autoindent
@@ -18,6 +5,7 @@ Plug 'jiangmiao/auto-pairs'
 
 set tags=tags;
 
+setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab cindent
 autocmd Filetype cxx setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab cindent
 autocmd Filetype cpp setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab cindent
 autocmd Filetype h setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab cindent
@@ -41,6 +29,7 @@ vnoremap C "_C
 
 nnoremap zz :update <CR>
 
+nnoremap <leader>o <cmd>CHADopen<cr>
 
 nnoremap <S-Tab> <<
 nnoremap <Tab> >>
@@ -50,8 +39,19 @@ inoremap <S-Tab> <C-d>
 :nnoremap <silent> <C-K> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
 ""source cscope_maps.vim
 
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#handler_enabled = 1
 let g:formatterpath=['autopep8']
 luafile $HOME/.config/nvim/lua/init.lua
+colorscheme tokyonight
 
+function! CloseChadTree()
+    let l:bufs = filter(range(1, bufnr('$')), 'getbufvar(v:val, "&filetype") == "CHADTree"')
+    for l:buf in l:bufs
+        :execute "bdelete " . l:buf
+    endfor
+endfunction
+
+nnoremap <leader>O <cmd> :call CloseChadTree()<CR>
+map <c-n> <c-w><
+map <c-m> <c-w>>
+map + <c-w>+
+map - <c-w>-
