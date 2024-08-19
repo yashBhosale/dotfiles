@@ -55,3 +55,5 @@ map <c-n> <c-w><
 map <c-m> <c-w>>
 map + <c-w>+
 map - <c-w>-
+nnoremap <leader>v :vsp <bar> CHADopen <CR>
+nnoremap <leader>s :sp <bar> CHADopen <CR>
